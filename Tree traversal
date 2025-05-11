@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct tree {
+    int data;
+    struct tree *lchild, *rchild;
+};
+
+struct tree *insert(struct tree *p, int n);
+void inorder(struct tree *p);
+void preorder(struct tree *p);
+void postorder(struct tree *p);
+
+int main() {
+    int x, y, i;
+    struct tree *root = NULL;
+
+    printf(" number of nodes in the tree: ");
+    scanf("%d", &x);
+
+    while (x-- > 0) {
+        printf(" data part of the node: ");
+        scanf("%d", &y);
+        root = insert(root, y);
+    }
+printf("\nEnter the traversal you want\n");
+    printf("1. Inorder\n2. Preorder\n3. Postorder\n");
+    scanf("%d", &i);
+
+    switch (i) {
+        case 1:
+            printf(" inorder traversal is:\n");
+            inorder(root);
+            break;
+        case 2:
+            printf("preorder traversal is:\n");
+            preorder(root);
+            break;
+        case 3:
+            printf(" postorder traversal is:\n");
+            postorder(root);
+            break;
+    }
+}
+
+//  insert node 
+struct tree *insert(struct tree *p, int n) {
+    if (p == NULL) {
+  struct tree *newNode = (struct tree *)malloc(sizeof(struct tree));
+        newNode->data = n;
+        newNode->lchild = newNode->rchild = NULL;
+        return newNode;
+    }
+
+    if (n < p->data)
+        p->lchild = insert(p->lchild, n);
+    else
+        p->rchild = insert(p->rchild, n);
+
+    return p;
+}
+
+// Inorder
+void inorder(struct tree *p) {
+    if (p != NULL) {
+        inorder(p->lchild);
+        printf("%d ", p->data);
+        inorder(p->rchild);
+    }
+}
+// Preorder 
+void preorder(struct tree *p) {
+    if (p != NULL) {
+        printf("%d ", p->data);
+        preorder(p->lchild);
+        preorder(p->rchild);
+    }
+}
+// Postorder 
+void postorder(struct tree *p) {
+    if (p != NULL) {
+ postorder(p->lchild);
+        postorder(p->rchild);
+        printf("%d ", p->data);
+    }
+}
