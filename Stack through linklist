@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+void push();
+void pop();
+void display();
+
+struct Stack {
+    int data;
+    struct Stack* next;
+};
+struct Stack *top = NULL, *temp;
+void main() {
+    int choice;
+
+    do {
+        printf("\n1. Push");
+        printf("\n2. Pop");
+        printf("\n3. Display");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: push(); break;
+            case 2: pop(); break;
+            case 3: display(); break;
+        }
+    } while (choice != 4);
+}
+void push() {
+    temp = (struct Stack*)malloc(sizeof(struct Stack));
+
+    if (temp == NULL) {
+        printf("Memory allocation failed!\n");
+        return;
+    }
+
+    printf("\nEnter value: ");
+    scanf("%d", &temp->data);
+
+    temp->next = top;  
+    top = temp;
+
+    printf("%d pushed\n", temp->data);
+}
+void pop() {
+    if (top == NULL) {
+        printf("Stack Underflow \n");
+        return;
+    }
+
+    struct Stack* temp = top;
+    printf("Pop value: %d\n", temp->data);
+    top = top->next;
+    free(temp);
+}
+void display() {
+    struct Stack* temp = top;
+
+    if (top == NULL) {
+        printf("empty.\n");
+        return;
+    }
+
+    printf("Stack elements:\n");
+    while (temp != NULL) {
+        printf("%d\n", temp->data);
+        temp = temp->next;
+    }
+} #include <stdio.h>
+#include <stdlib.h>
+
+void insert();
+void del();
+void display();
+
+struct Queue {
+    int data;
+    struct Queue* next;
+};
+
+struct Queue *front = NULL, *rear = NULL, *temp;
+
+void main() {
+    int choice;
+
+    do {
+        printf("\n1. Inserted");
+        printf("\n2. Deleted");
+        printf("\n3. Display");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: insert(); break;
+            case 2: del(); break;
+            case 3: display(); break;
+        }
+    } while (choice != 4);
+}
+
+void insert() {
+    temp = (struct Queue*)malloc(sizeof(struct Queue));
+
+    if (temp == NULL) {
+        printf("Memory allocation failed!\n");
+        return;
+    }
+
+    printf("\nEnter value: ");
+    scanf("%d", &temp->data);
+    temp->next = NULL;
+
+    if (rear == NULL) {
+        front = rear = temp;
+    } else {
+        rear->next = temp;
+        rear = temp;
+    }
+
+    printf("%d enqueued\n", temp->data);
+}
+
+void del() {
+    if (front == NULL) {
+        printf("Queue Underflow\n");
+        return;
+    }
+
+    temp = front;
+    printf("Dequeued value: %d\n", temp->data);
+    front = front->next;
+
+    if (front == NULL) {
+        rear = NULL;
+    }
+
+    free(temp);
+}
+
+void display() {
+    struct Queue* temp = front;
+
+    if (front == NULL) {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    printf("Queue elements:\n");
+    while (temp != NULL) {
+        printf("%d\n", temp->data);
+        temp = temp->next;
+    }
+}
